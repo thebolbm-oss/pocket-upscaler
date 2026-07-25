@@ -1,1 +1,37 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket AI Upscaler</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- ONNX Runtime Web Library (Ye AI ko browser me chalayegi) -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>⚡ Pocket Upscaler</h2>
+        <p>Enhance images using your phone's power!</p>
+
+        <div class="upload-section">
+            <input type="file" id="imageInput" accept="image/*">
+        </div>
+
+        <select id="modelSelect">
+            <option value="fast">Speed Mode (Fast, Basic AI)</option>
+            <option value="quality">Quality Mode (RealESR-Compact)</option>
+        </select>
+
+        <button id="enhanceBtn" onclick="processImage()">Enhance Image</button>
+
+        <p id="status"></p>
+        
+        <div class="result-section">
+            <img id="preview" alt="Preview Image">
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
