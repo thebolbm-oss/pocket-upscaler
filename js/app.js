@@ -1,4 +1,3 @@
-
 const imageInput = document.getElementById('imageInput');
 const preview = document.getElementById('preview');
 const statusText = document.getElementById('status');
@@ -20,22 +19,23 @@ imageInput.addEventListener('change', (e) => {
     }
 });
 
-// Model load karna repo ke 'models' folder se
+// Model load karna direct internet se! (Download karne ki jhanjhat khatam)
 async function loadModel(type) {
-    statusText.innerText = "Loading AI Model into memory...";
-    // Yahan hum path define kar rahe hain jahan models rakhe jayenge
-    const modelPath = type === 'fast' 
-        ? './models/fast-upscaler.onnx' 
-        : './models/realesr-compact.onnx';
+    statusText.innerText = "Fetching AI Model from Cloud... Please wait.";
+    
+    // Yahan hum direct un repositories ka link de rahe hain jahan models rakhe hain
+    const modelUrl = type === 'fast' 
+        ? 'https://raw.githubusercontent.com/onnx/models/main/vision/super_resolution/sub_pixel_cnn_2016/model/super-resolution-10.onnx' 
+        : 'https://huggingface.co/spaces/Xenova/real-esrgan-web/resolve/main/models/realesrgan-x4.onnx';
 
     try {
-        // ONNX Runtime session create karna
-        session = await ort.InferenceSession.create(modelPath, { executionProviders: ['wasm'] });
+        // ONNX Runtime seedha URL se model fetch karega
+        session = await ort.InferenceSession.create(modelUrl, { executionProviders: ['wasm'] });
         statusText.innerText = "Model loaded successfully! Starting enhancement...";
         return true;
     } catch (error) {
-        console.error(error);
-        statusText.innerText = "Error loading model. Check console.";
+        console.error("Error loading model:", error);
+        statusText.innerText = "Error: Could not load the model. Check console.";
         return false;
     }
 }
@@ -54,10 +54,8 @@ async function processImage() {
 
     statusText.innerText = "Processing... Phone is working hard ⚡";
 
-    // Note: Yahan par image ko tensor mein convert karke model mein feed karne ka logic aayega.
-    // Uske baad tensor ko wapas image mein convert kiya jayega.
-    
+    // Tensor math implementation baaki hai
     setTimeout(() => {
-        statusText.innerText = "Enhancement complete! (Tensor math implementation pending)";
+        statusText.innerText = "Enhancement complete! (Tensor code pending)";
     }, 2000);
 }
